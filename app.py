@@ -4,7 +4,7 @@ import face_recognition
 import urllib.request
 import json
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 app.config["DEBUG"] = True
 
 def faceLoop(array):
@@ -36,4 +36,6 @@ def classify_image():
   print(data)
   objRes = faceLoop(data)
   return json.dumps(objRes), 200
-app.run()
+
+if __name__ == '__main__':
+    app.run()
