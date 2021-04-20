@@ -15,19 +15,23 @@ def faceLoop(array):
     return array
   baseEncode = face_recognition.face_encodings(baseEncode)[0]
   for obj in array:
-    testImg = urllib.request.urlopen(obj['img'])
-    imageTest = face_recognition.load_image_file(testImg)
-    if(len(face_recognition.face_encodings(imageTest)) != 0):
-      imageTest = face_recognition.face_encodings(imageTest)[0]
-      # Compare faces
-      results = face_recognition.compare_faces(
-          [baseEncode], imageTest)
+    if 'img' in obj: 
+      testImg = urllib.request.urlopen(obj['img'])
+      imageTest = face_recognition.load_image_file(testImg)
+      try:
+        imageTest = face_recognition.face_encodings(imageTest)[0]
+        # Compare faces
+        results = face_recognition.compare_faces(
+            [baseEncode], imageTest)
 
-      if results[0]:
-          obj['verified'] = 1
-      else:
-          obj['verified'] = 0
+        if results[0]:
+            obj['verified'] = 1
+        else:
+            obj['verified'] = 0
+      except IndexError as e:
+        print(e)       
   return array
+
 
 
 @app.route('/', methods=['GET'])
