@@ -11,6 +11,8 @@ def faceLoop(array):
   baseImg = array[0]['img']
   baseImg = urllib.request.urlopen(baseImg)
   baseEncode = face_recognition.load_image_file(baseImg)
+  if(len(face_recognition.face_encodings(baseEncode)) == 0):
+    return array
   baseEncode = face_recognition.face_encodings(baseEncode)[0]
   for obj in array:
     if 'img' in obj: 
@@ -27,8 +29,7 @@ def faceLoop(array):
         else:
             obj['verified'] = 0
       except IndexError as e:
-        print(e)
-  print(array)        
+        print(e)       
   return array
 
 
