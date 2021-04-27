@@ -3,6 +3,19 @@ from flask import Flask, request
 import face_recognition
 import urllib.request
 import json
+import os
+from dotenv import dotenv_values
+from supabase_py import create_client, Client
+
+
+config = dotenv_values(".env")
+
+url = config['SUPABASE_URL']
+key = config["SUPABASE_KEY"]
+supabase: Client = create_client(url, key)
+
+
+
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
